@@ -1,7 +1,6 @@
-import { useMediaType } from "@styles/style.context";
-import React, { FC } from "react";
+import { FC } from 'react';
 // @ts-ignore
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const Wrapper = styled.div`
   display: flex;

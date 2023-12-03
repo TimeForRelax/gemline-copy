@@ -1,13 +1,14 @@
-import { media } from "@styles/media";
-import styled from "styled-components";
+import { media } from '@styles/media';
+import styled from 'styled-components';
 
 export const Wrapper = styled.div<{ isAuth?: boolean }>`
   height: 100%;
   width: 100%;
   max-width: 1440px;
+  margin: 0 auto;
   padding: 0 40px;
   display: grid;
-  grid-template-columns: ${({ isAuth }) => (isAuth ? "1fr" : "260px 1fr")};
+  grid-template-columns: ${({ isAuth }) => (isAuth ? '1fr' : '260px 1fr')};
   gap: 40px;
   overflow: hidden;
 
@@ -16,7 +17,7 @@ export const Wrapper = styled.div<{ isAuth?: boolean }>`
   `}
 `;
 
-export const SideBar = styled.div`
+export const SideBarWrapper = styled.div`
   background-color: yellow;
   height: 100%;
   overflow-y: auto;

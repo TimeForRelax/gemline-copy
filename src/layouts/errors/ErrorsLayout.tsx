@@ -1,14 +1,14 @@
 import { SideBar } from '@features/index';
 import { Body, SideBarWrapper, Wrapper } from '@layouts/elements/elements';
-import { renderRoutes } from '@utils/index';
+import { renderRoutes } from '@utils/renderRoutes';
 import { FC } from 'react';
 
-interface UserLayoutProps {
+interface ErrorsLayoutProps {
   routes: any;
   parentPathLength: number;
 }
 
-export const UserLayout: FC<UserLayoutProps> = ({ routes, parentPathLength }) => {
+export const ErrorsLayout: FC<ErrorsLayoutProps> = ({ routes, parentPathLength }) => {
   return (
     <Wrapper>
       <SideBarWrapper>

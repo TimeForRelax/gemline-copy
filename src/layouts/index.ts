@@ -1,4 +1,5 @@
-import { UserLayout } from "./user/UserLayout";
-import { AuthenticationLayout } from "./authentication/AuthenticationLayout";
+import { UserLayout } from '@layouts/user/UserLayout';
+import { AuthenticationLayout } from '@layouts/authentication/AuthenticationLayout';
+import { ErrorsLayout } from '@layouts/errors/ErrorsLayout';
 
-export { UserLayout, AuthenticationLayout };
+export { UserLayout, AuthenticationLayout, ErrorsLayout };
