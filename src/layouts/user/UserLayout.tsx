@@ -10,11 +10,19 @@ interface UserLayoutProps {
 
 export const UserLayout: FC<UserLayoutProps> = ({ routes, parentPathLength }) => {
   return (
-    <Wrapper>
-      <SideBarWrapper>
-        <SideBar />
-      </SideBarWrapper>
-      <Body>{renderRoutes(routes, parentPathLength)}</Body>
-    </Wrapper>
+    <div
+      style={{
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+      }}
+    >
+      <Wrapper>
+        <SideBarWrapper>
+          <SideBar />
+        </SideBarWrapper>
+        <Body>{renderRoutes(routes, parentPathLength)}</Body>
+      </Wrapper>
+    </div>
   );
 };
