@@ -1,7 +1,12 @@
 import { FC } from 'react';
 import styled from '@emotion/styled';
+import { media } from '@styles/media';
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  ${media.tablet`
+    display: none;
+  `}
+`;
 
 interface ContractsProps {}
 

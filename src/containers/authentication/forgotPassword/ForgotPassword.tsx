@@ -1,10 +1,14 @@
-import { FC } from 'react';
-import styled from '@emotion/styled';
-
-const Wrapper = styled.div``;
+import { AuthenticationWrapper } from '@styles/index';
+import { FC, useState } from 'react';
+import { FinishResetPassword } from './components/finishResetPassword/FinishResetPassword';
+import { ForgotPasswordForm } from './components/forgotPasswordForm/ForgotPasswordForm';
 
 interface ForgotPasswordProps {}
 
 export const ForgotPassword: FC<ForgotPasswordProps> = () => {
-  return <Wrapper>Forgot Password</Wrapper>;
+  const [isComplete, setIsComplete] = useState<boolean>(true);
+
+  return (
+    <AuthenticationWrapper>{!isComplete ? <ForgotPasswordForm /> : <FinishResetPassword />}</AuthenticationWrapper>
+  );
 };

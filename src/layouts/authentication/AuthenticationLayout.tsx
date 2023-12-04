@@ -9,7 +9,7 @@ interface AuthenticationLayoutProps {
 
 export const AuthenticationLayout: FC<AuthenticationLayoutProps> = ({ routes, parentPathLength }) => {
   return (
-    <Wrapper isAuth>
+    <Wrapper isauth>
       <Body>{renderRoutes(routes, parentPathLength)}</Body>
     </Wrapper>
   );

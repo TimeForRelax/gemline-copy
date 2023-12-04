@@ -1,15 +1,9 @@
-import { usePrevious } from "@utils/index";
-import {
-  ReactNode,
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
-import { ThemeProvider } from "styled-components";
-import { comparatorFunction, getMediaType } from "./media";
-import { theme } from "./theme";
-import { StyleContextProviderType, StyleState } from "./types";
+import { usePrevious } from '@utils/index';
+import { ReactNode, createContext, useContext, useEffect, useState } from 'react';
+import { ThemeProvider } from 'styled-components';
+import { comparatorFunction, getMediaType } from './media';
+import { theme } from './theme';
+import { StyleContextProviderType, StyleState } from './types';
 
 const defaultMediaType = getMediaType();
 
@@ -23,9 +17,9 @@ export const useWindowSize = () => {
     function updateSize() {
       setSize([window.innerWidth, window.innerHeight]);
     }
-    window.addEventListener("resize", updateSize);
+    window.addEventListener('resize', updateSize);
     updateSize();
-    return () => window.removeEventListener("resize", updateSize);
+    return () => window.removeEventListener('resize', updateSize);
   }, []);
   return size;
 };
@@ -45,10 +39,7 @@ export const useMediaType = () => {
   return mediaType;
 };
 
-const StyleContext = createContext([
-  DEFAULT_STYLE,
-  null as any,
-] as StyleContextProviderType);
+const StyleContext = createContext([DEFAULT_STYLE, null as any] as StyleContextProviderType);
 
 const useStyleContextCreator = (): StyleContextProviderType => {
   const [style, setStyle] = useState(DEFAULT_STYLE);
@@ -81,7 +72,7 @@ export const useStyleContext = () => {
   const service = useContext(StyleContext);
 
   if (!service) {
-    throw new Error("Tooltip Context is unavailable");
+    throw new Error('Tooltip Context is unavailable');
   }
 
   return service;

@@ -24,7 +24,9 @@ export const UserSwitcher: FC<UserSwitcherProps> = () => {
   // }, [type]);
 
   useEffect(() => {
-    navigate(getPath(View.USER_CONTRACTS));
+    setTimeout(() => {
+      navigate(getPath(View.USER_CONTRACTS));
+    }, 1000);
   }, []);
 
   return <LoadingScreen />;

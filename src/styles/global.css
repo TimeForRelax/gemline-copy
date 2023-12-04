@@ -59,6 +59,7 @@ body::before {
   right: 40px;
   background: url("../assets/backgrounds/bg_body_top.svg") no-repeat center;
   background-size: cover;
+  z-index: -1;
 }
 
 body::after {
@@ -72,8 +73,8 @@ body::after {
   transform: translateY(-70%);
   background: url("../assets/backgrounds/bg_body_left.svg") no-repeat center;
   background-size: cover;
+  z-index: -1;
 }
-
 
 * {
   box-sizing: border-box;

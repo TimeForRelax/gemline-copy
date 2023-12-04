@@ -2,6 +2,7 @@ import {
   Contracts,
   Error404,
   ForgotPassword,
+  ResetPassword,
   History,
   Investment,
   Login,
@@ -30,6 +31,10 @@ export const routes = [
       {
         path: PATHS.AUTHENTICATION_FORGOT_PASSWORD,
         component: <ForgotPassword />,
+      },
+      {
+        path: PATHS.AUTHENTICATION_RESET_PASSWORD,
+        component: <ResetPassword />,
       },
     ],
   },

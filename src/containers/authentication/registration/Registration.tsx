@@ -1,10 +1,18 @@
-import { FC } from 'react';
-import styled from '@emotion/styled';
-
-const Wrapper = styled.div``;
+import { Footer } from '@components/index';
+import { AuthenticationWrapper } from '@styles/index';
+import { FC, useState } from 'react';
+import { FinishRegistration } from './components/finishRegisration/FinishRegistration';
+import { RegistrationForm } from './components/registrationForm/RegistrationForm';
 
 interface RegistrationProps {}
 
 export const Registration: FC<RegistrationProps> = () => {
-  return <Wrapper>Registration</Wrapper>;
+  const [isComplete, setIsComplete] = useState<boolean>(false);
+
+  return (
+    <AuthenticationWrapper>
+      {!isComplete ? <RegistrationForm /> : <FinishRegistration />}
+      <Footer />
+    </AuthenticationWrapper>
+  );
 };

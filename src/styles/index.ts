@@ -1,5 +1,14 @@
-import { borderRadiusFetch, colorFetch } from "./functions";
-import { StyleContextProvider } from "./style.context";
-import { media } from "./media";
+import { borderRadiusFetch, colorFetch } from "@styles/functions";
+import { StyleContextProvider } from "@styles/style.context";
+import { media } from "@styles/media";
+import { theme } from "@styles/theme";
+import { AuthenticationWrapper } from "@styles/common";
 
-export { colorFetch, borderRadiusFetch, StyleContextProvider, media };
+export {
+  colorFetch,
+  borderRadiusFetch,
+  StyleContextProvider,
+  media,
+  theme,
+  AuthenticationWrapper,
+};

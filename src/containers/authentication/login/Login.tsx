@@ -1,24 +1,15 @@
+import { Footer } from '@components/index';
+import { AuthenticationWrapper } from '@styles/index';
 import { FC } from 'react';
-// @ts-ignore
-import styled from 'styled-components';
-
-const Wrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-// const Exm = styled.div`
-//   width: 500px;
-//   height: 500px;
-//   background-color: #fff;
-//   border: 1px solid black;
-// `;
+import { AuthorizationForm } from './components/authorizationForm/AuthorizationForm';
 
 interface LoginProps {}
 
 export const Login: FC<LoginProps> = () => {
-  // const { tablet } = useMediaType();
-
-  return <Wrapper>{/* <img src={logo} /> */}</Wrapper>;
+  return (
+    <AuthenticationWrapper>
+      <AuthorizationForm />
+      <Footer />
+    </AuthenticationWrapper>
+  );
 };
