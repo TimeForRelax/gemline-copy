@@ -36,7 +36,7 @@ const Label = styled(InputLabel)`
 `;
 
 const LabelNotReqDesc = styled(Typography)`
-  color: ${colorFetch('dark_grey')({ theme })};
+  color: ${colorFetch('dark_gray')({ theme })};
   font-family: Nunito400;
   font-size: 16px;
   font-weight: 400;
@@ -46,29 +46,36 @@ const LabelNotReqDesc = styled(Typography)`
 const StyledTextField = styled(TextField)`
   .MuiOutlinedInput-root {
     border-radius: 4px;
-    background: ${colorFetch('dark_trout_grey')({ theme })};
+    background: ${colorFetch('dark_trout_gray')({ theme })};
     color: ${colorFetch('white')({ theme })};
     &:not(.Mui-error) {
       &:hover {
         fieldset {
-          border-color: ${colorFetch('light_pale_sky_grey')({ theme })};
+          border-color: ${colorFetch('light_pale_sky_gray')({ theme })};
         }
       }
     }
+  }
+
+  .MuiOutlinedInput-input {
+    font-family: Nunito600;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: normal;
   }
 
   .Mui-focused {
     &:not(.Mui-error) {
       &:focus-within {
         fieldset {
-          border-color: ${colorFetch('light_pale_sky_grey')({ theme })};
+          border-color: ${colorFetch('light_pale_sky_gray')({ theme })};
         }
       }
     }
   }
 
   .MuiOutlinedInput-notchedOutline {
-    border: 1px solid ${colorFetch('mid_grey')({ theme })};
+    border: 1px solid ${colorFetch('mid_gray')({ theme })};
   }
 `;
 
@@ -87,10 +94,12 @@ export const UniversalInput: FC<UniversalInputProps> = ({
 
   return (
     <InputBox>
-      <NotRequiredLabelBox>
-        <Label htmlFor={name}>{label}</Label>
-        {!!required && <LabelNotReqDesc>Необязательно</LabelNotReqDesc>}
-      </NotRequiredLabelBox>
+      {label && (
+        <NotRequiredLabelBox>
+          <Label htmlFor={name}>{label}</Label>
+          {!!required && <LabelNotReqDesc>Необязательно</LabelNotReqDesc>}
+        </NotRequiredLabelBox>
+      )}
       <StyledTextField
         {...rules}
         placeholder={placeholder}
@@ -103,13 +112,6 @@ export const UniversalInput: FC<UniversalInputProps> = ({
         helperText={helperText}
         id={name}
       />
-      {/* TODO */}
-
-      {/* {linkTo && (
-        <FormLink href={linkTo.href} underline="none">
-          {linkTo.text}
-        </FormLink>
-      )} */}
     </InputBox>
   );
 };

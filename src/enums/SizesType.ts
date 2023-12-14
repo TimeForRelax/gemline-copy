@@ -1,5 +1,6 @@
 export enum SizesType {
-  monitor = "monitor",
-  tablet = "tablet",
-  phone = "phone",
+  monitor = 'monitor',
+  tabletPro = 'tabletPro',
+  tablet = 'tablet',
+  phone = 'phone',
 }

@@ -1,8 +1,7 @@
-import { AuthenticationView, ErrorView, GeneralView, UserView } from '@enums/index';
+import { ErrorView, GeneralView, UserView } from '@enums/index';
 
 export const View = {
   ...GeneralView,
-  ...AuthenticationView,
   ...UserView,
   ...ErrorView,
 };
@@ -15,10 +14,6 @@ export type CombinedRoutes = {
 
 export type GeneralRoutes = {
   [key in keyof GeneralView]: any;
-};
-
-export type AuthenticationRoutes = {
-  [key in AuthenticationView]: any;
 };
 
 export type UserRoutes = {

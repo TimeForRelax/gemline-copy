@@ -1,8 +1,7 @@
-import { FC } from "react";
-import styled from "@emotion/styled";
+import { FC } from 'react';
+import styled from '@emotion/styled';
 
-// @ts-ignore
-import { ReactComponent as GemLineLogo } from "@assets/images/common/logo/colored_logo.svg";
+import { ReactComponent as GemLineLogo } from '@assets/images/common/logo/colored_logo.svg';
 
 export const StyledGemLineLogo = styled(GemLineLogo)`
   display: flex;
@@ -12,7 +11,7 @@ export const StyledGemLineLogo = styled(GemLineLogo)`
   margin: 0 auto 30px auto;
 `;
 
-interface LogoProps {}
+interface LogoProps { }
 
 export const Logo: FC<LogoProps> = () => {
   return <StyledGemLineLogo />;

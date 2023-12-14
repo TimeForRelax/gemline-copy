@@ -1,7 +1,8 @@
-import { SideBar } from '@features/index';
+import { MobileWalletBlock, SideBar } from '@features/index';
 import { Body, SideBarWrapper, Wrapper } from '@layouts/elements/elements';
+import { useMediaType, useWindowSize } from '@styles/index';
 import { renderRoutes } from '@utils/index';
-import { FC } from 'react';
+import { FC, useCallback, useState } from 'react';
 
 interface UserLayoutProps {
   routes: any;
@@ -9,20 +10,36 @@ interface UserLayoutProps {
 }
 
 export const UserLayout: FC<UserLayoutProps> = ({ routes, parentPathLength }) => {
+  const [width] = useWindowSize();
+  const { tablet } = useMediaType();
+
+  const [sideBarNode, setSideBarNode] = useState<HTMLElement | null>(null);
+  const [balanceNode, setBalanceNode] = useState<HTMLElement | null>(null);
+
+  const sideBarRef = useCallback((node: HTMLElement | null) => {
+    if (node) {
+      setSideBarNode(node);
+    }
+  }, []);
+
+  const balanceRef = useCallback((node: HTMLElement | null) => {
+    if (node) {
+      setBalanceNode(node);
+    }
+  }, []);
+
   return (
-    <div
-      style={{
-        width: '100%',
-        display: 'flex',
-        justifyContent: 'center',
-      }}
-    >
-      <Wrapper>
-        <SideBarWrapper>
-          <SideBar />
-        </SideBarWrapper>
-        <Body>{renderRoutes(routes, parentPathLength)}</Body>
-      </Wrapper>
-    </div>
+    <Wrapper>
+      <SideBarWrapper ref={sideBarRef} widthWindow={width > 1440 ? 1440 : width}>
+        <SideBar />
+      </SideBarWrapper>
+      {tablet && <MobileWalletBlock balanceRef={balanceRef} />}
+      <Body
+        paddingTop={balanceNode?.getBoundingClientRect().height ?? 0}
+        paddingBottom={sideBarNode?.getBoundingClientRect().height ?? 0}
+      >
+        {renderRoutes(routes, parentPathLength)}
+      </Body>
+    </Wrapper>
   );
 };

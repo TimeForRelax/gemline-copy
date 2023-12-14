@@ -73,13 +73,12 @@ export class HttpService {
   }
 
   static makeRequest(config: any) {
-    // @NOTE this is an example of custom items in config
-    // let customOption: any;
+    let location: any;
 
-    // if (config.customOption) {
-    //   customOption = config.customOption;
-    //   delete config.customOption;
-    // }
+    if (config.location) {
+      location = config.location;
+      delete config.location;
+    }
 
     const cancelToken = this.source.token;
     const token = HttpService.getToken();

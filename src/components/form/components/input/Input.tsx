@@ -1,5 +1,5 @@
-import { UniversalInput } from "@components/form/common/universalInput/UniversalInput";
-import { FC } from "react";
+import { FC } from 'react';
+import { UniversalInput } from '../../common/universalInput/UniversalInput';
 
 interface InputProps {
   rules: any;

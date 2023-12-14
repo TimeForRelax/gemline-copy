@@ -3,56 +3,56 @@ import { Box, Link, Typography } from '@mui/material';
 import { colorFetch, media, theme } from '@styles/index';
 import { FooterLinks, footerLinksData } from './data';
 
-// @ts-ignore
 import { ReactComponent as DarkLogo } from '@assets/images/common/logo/dark_logo.svg';
 
 const FooterWrapper = styled(Box)`
   position: relative;
-  padding: 0 70px;
-  width: 100%;
-  height: 86px;
+  padding: 20px 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
 
   &:after {
     content: '';
-    width: calc(100% - 140px);
+    width: 100%;
     height: 1px;
-    background-color: ${colorFetch('dark_mako_grey')({ theme })};
+    background-color: ${colorFetch('dark_mako_gray')({ theme })};
     position: absolute;
     top: 0;
     left: 50%;
     transform: translateX(-50%);
   }
 
-  ${media.tablet`
-
-  `}
+  ${media.tablet} {
+    padding: 20px 0;
+  }
 `;
 
 const LeftBox = styled(Box)`
   display: flex;
   align-items: center;
-  gap: 60px;
+  gap: 50px;
 
-  ${media.tablet`
+  ${media.tablet} {
     flex-direction: column;
-  `}
+    align-items: flex-start;
+    gap: 30px;
+  }
 `;
 
 const RightBox = styled(Box)`
   display: flex;
   align-items: center;
-  gap: 60px;
+  gap: 50px;
 
-  ${media.tablet`
+  ${media.tablet} {
     flex-direction: column;
-  `}
+    gap: 30px;
+  }
 `;
 
 const GemlineInc = styled(Typography)`
-  color: ${colorFetch('dark_grey')({ theme })};
+  color: ${colorFetch('dark_gray')({ theme })};
   font-family: Nunito600;
   font-size: 14px;
   font-weight: 600;
@@ -60,7 +60,7 @@ const GemlineInc = styled(Typography)`
 `;
 
 const TermsOfUseLink = styled(Link)`
-  color: ${colorFetch('dark_grey')({ theme })};
+  color: ${colorFetch('dark_gray')({ theme })};
   font-family: Nunito600;
   font-size: 14px;
   font-weight: 600;

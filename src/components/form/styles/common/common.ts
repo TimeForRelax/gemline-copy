@@ -1,15 +1,13 @@
-import { Box, Button, Link, Typography } from '@mui/material';
-import { theme, colorFetch } from '@styles/index';
 import styled from '@emotion/styled';
+import { Box, Button, Link, Typography } from '@mui/material';
+import { colorFetch, theme } from '@styles/index';
 
 export const AuthFormsBox = styled(Box)`
-  padding-top: 50px;
+  padding: 40px 0;
   margin: auto;
   width: 100%;
   max-width: 435px;
-  height: max-content;
   flex: 1 0 auto;
-  overflow-y: auto;
 `;
 
 export const FormsHeading = styled(Typography)`
@@ -23,7 +21,7 @@ export const FormsHeading = styled(Typography)`
 `;
 
 export const FormsSubHeading = styled(Typography)`
-  color: ${colorFetch('light_grey')({ theme })};
+  color: ${colorFetch('light_gray')({ theme })};
   text-align: center;
   font-family: Nunito600;
   font-size: 16px;
@@ -37,6 +35,10 @@ export const FormsFieldsBox = styled(Box)`
   flex-direction: column;
   gap: 20px;
   margin-bottom: 30px;
+
+  &.login_fields {
+    margin-bottom: 12px;
+  }
 `;
 
 export const FormsSubmitButton = styled(Button)`
@@ -75,7 +77,7 @@ export const FormsFooterBox = styled(Box)`
 `;
 
 export const FormsFooterText = styled(Typography)`
-  color: ${colorFetch('light_grey')({ theme })};
+  color: ${colorFetch('light_gray')({ theme })};
   font-family: Nunito400;
   font-size: 16px;
   font-weight: 400;

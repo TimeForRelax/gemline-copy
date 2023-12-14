@@ -17,5 +17,5 @@ export const useRedirectTo404Error = () => {
     if (currentView === View.ERROR_404 && pathname !== getPath(View.ERROR_404)) {
       navigate(queryString.stringifyUrl({ url: getPath(View.ERROR_404) }), { replace: true });
     }
-  }, [currentView, navigate, pathname]);
+  }, [currentView]);
 };

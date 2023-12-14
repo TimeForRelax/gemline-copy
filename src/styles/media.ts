@@ -1,9 +1,9 @@
 import { SizesType } from '@enums/SizesType';
-import { Sizes, Media } from './types';
-import { css } from '@emotion/react';
+import { Media, Sizes } from './types';
 
 export const sizes: Sizes = {
   monitor: 1440,
+  tabletPro: 1030,
   tablet: 768,
   phone: 430,
 };
@@ -33,23 +33,20 @@ export const comparatorFunction = (first: Media, second: Media): boolean => {
 };
 
 export const media = Object.keys(sizes as Sizes).reduce((acc: any, label: string) => {
-  acc[label] = (...args: string[]) => css`
-    @media (max-width: ${(sizes as Sizes)[label as SizesType] / 16}em) {
-      ${(css as any)(...args)};
-    }
-  `;
+  acc[label] = `@media (max-width: ${(sizes as Sizes)[label as SizesType]}px)`;
+
   return acc;
 }, {});
 
-export const inlineMedia =
-  (breakpoint: number) =>
-  (...styles: any[]) => {
-    return css`
-      @media (min-width: ${breakpoint / 16}em) {
-        ${(css as any)(...styles)};
-      }
-    `;
-  };
+// export const inlineMedia =
+//   (breakpoint: number) =>
+//   (...styles: any[]) => {
+//     return css`
+//       @media (min-width: ${breakpoint / 16}em) {
+//         ${(css as any)(...styles)};
+//       }
+//     `;
+//   };
 
 export const mediaType: Media = Object.keys(sizes as Sizes).reduce((acc: any, label: string) => {
   acc[label] = window.matchMedia(`(max-width: ${(sizes as Sizes)[label as SizesType]}px)`).matches;

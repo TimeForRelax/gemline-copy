@@ -41,8 +41,7 @@
 
 body {
   margin: 0;
-  width: 100%;
-  height: 100%;
+  min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: #333640;
@@ -67,13 +66,25 @@ body::after {
   width: 102px;
   height: 340px;
   display: inline-block;
-  position: absolute;
+  position: fixed;
   top: 70%;
   left: 0;
   transform: translateY(-70%);
   background: url("../assets/backgrounds/bg_body_left.svg") no-repeat center;
   background-size: cover;
   z-index: -1;
+}
+
+@media (max-width: 768px) {
+  body::after {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  body::before {
+    display: none;
+  }
 }
 
 * {
@@ -83,5 +94,6 @@ body::after {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
 }

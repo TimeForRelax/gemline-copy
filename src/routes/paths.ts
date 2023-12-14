@@ -6,12 +6,6 @@ import queryString from 'query-string';
 export const MAPPING = Object.freeze({
   [View.REDIRECT]: { path: '/' },
 
-  [View.AUTHENTICATION]: { path: '/authentication' },
-  [View.AUTHENTICATION_LOGIN]: { path: '/authentication/login' },
-  [View.AUTHENTICATION_REGISTRATION]: { path: '/authentication/registration' },
-  [View.AUTHENTICATION_FORGOT_PASSWORD]: { path: '/authentication/forgot-password' },
-  [View.AUTHENTICATION_RESET_PASSWORD]: { path: '/authentication/reset-password' },
-
   [View.USER]: { path: '/user' },
   [View.USER_CONTRACTS]: { path: '/user/contracts' },
   [View.USER_INVESTMENT]: { path: '/user/investment' },

@@ -1,5 +1,5 @@
-import { UniversalInput } from "@components/form/common/universalInput/UniversalInput";
-import { FC, ReactNode } from "react";
+import { FC, ReactNode } from 'react';
+import { UniversalInput } from '../../common/universalInput/UniversalInput';
 
 interface InputWithStartAdornmentProps {
   rules: any;
@@ -12,8 +12,6 @@ interface InputWithStartAdornmentProps {
   helperText: string | undefined;
 }
 
-export const InputWithStartAdornment: FC<InputWithStartAdornmentProps> = ({
-  ...props
-}) => {
+export const InputWithStartAdornment: FC<InputWithStartAdornmentProps> = ({ ...props }) => {
   return <UniversalInput {...props} />;
 };

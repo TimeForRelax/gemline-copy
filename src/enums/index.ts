@@ -1,5 +1,5 @@
 import { SizesType } from '@enums/SizesType';
 import { SsValueType } from '@enums/SsValueType';
-import { AuthenticationView, ErrorView, GeneralView, UserView } from '@enums/View';
+import { ErrorView, GeneralView, UserView } from '@enums/View';
 
-export { SizesType, SsValueType, GeneralView, AuthenticationView, UserView, ErrorView };
+export { SizesType, SsValueType, GeneralView, UserView, ErrorView };
