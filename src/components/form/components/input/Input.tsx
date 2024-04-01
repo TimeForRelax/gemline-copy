@@ -9,6 +9,7 @@ interface InputProps {
   placeholder: string;
   error: boolean;
   helperText: string | undefined;
+  disabled?: boolean;
 }
 
 export const Input: FC<InputProps> = ({ ...props }) => {

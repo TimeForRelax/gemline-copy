@@ -1,39 +1,17 @@
+import { useContracts, useInvestPackages } from '@api/index';
 import { Footer } from '@components/index';
+import { ContentWrapper, Heading, Wrapper } from '@containers/common/styles';
 import styled from '@emotion/styled';
 import { Typography } from '@mui/material';
-import { Box } from '@mui/system';
-import { colorFetch, media, theme } from '@styles/index';
-import { FC } from 'react';
+import { colorFetch, media } from '@styles/index';
+import { createContext, FC, useEffect, useMemo, useRef, useState } from 'react';
+import { useGlobalState } from 'src/globalContext';
 import { InvestmentPackageSelector, PackagesInfo } from './components/index';
-
-const Wrapper = styled(Box)``;
-
-const ContentWrapper = styled(Box)`
-  padding: 40px 0;
-
-  ${media.phone} {
-    padding: 30px 0;
-  }
-`;
-
-const Heading = styled(Typography)`
-  color: ${colorFetch('white')({ theme })};
-  font-family: Nunito700;
-  font-size: 32px;
-  font-weight: 700;
-  line-height: normal;
-  margin-bottom: 42px;
-  width: max-content;
-
-  ${media.phone} {
-    font-size: 24px;
-    margin-bottom: 30px;
-  }
-`;
+import { getTimeRemaining } from './utils/utils';
 
 const HeadingBottom = styled(Typography)`
-  color: ${colorFetch('white')({ theme })};
-  font-family: Nunito700;
+  color: ${colorFetch('black')};
+  font-family: Gilroy700;
   font-size: 24px;
   font-weight: 700;
   line-height: normal;
@@ -45,25 +23,49 @@ const HeadingBottom = styled(Typography)`
   }
 `;
 
-export const ActivePckgBoxText = styled(Typography)`
-  align-self: center;
-  color: ${colorFetch('white')({ theme })};
-  font-family: Nunito700;
-  font-size: 16px;
-  font-weight: 700;
-  line-height: 22px;
-`;
-
 interface InvestmentProps {}
 
+export const RegDateCtx = createContext(null);
+
 export const Investment: FC<InvestmentProps> = () => {
+  const { promoStartDate } = useGlobalState();
+
+  const intervalId = useRef(null);
+
+  const [timeRemaining, setTimeRemaining] = useState(getTimeRemaining(promoStartDate));
+
+  useEffect(() => {
+    intervalId.current = setInterval(() => {
+      setTimeRemaining(getTimeRemaining(promoStartDate));
+    }, 1000);
+
+    return () => clearInterval(intervalId.current);
+  }, [promoStartDate]);
+
+  const { data: packagesData, isSuccess: isPackagesSuccess, isError: isPackagesError } = useInvestPackages();
+
+  const { data: contractsData, isSuccess: isContractsSuccess, isError: isContractsError } = useContracts();
+
+  const isShowPromoInfo = useMemo(
+    () => contractsData?.isContracts && Object.values(timeRemaining).some((el) => Number(el) > 0),
+    [contractsData?.isContracts, timeRemaining],
+  );
+
+  // useEffect(() => {
+  //   !isShowPromoInfo && clearInterval(intervalId.current);
+  // }, [isShowPromoInfo]);
+
+  if ((!isPackagesSuccess && !isContractsSuccess) || (isPackagesError && isContractsError)) return;
+
   return (
     <Wrapper>
       <ContentWrapper>
-        <Heading>Инвестиции</Heading>
-        <PackagesInfo />
-        <HeadingBottom>Инвестиции</HeadingBottom>
-        <InvestmentPackageSelector />
+        <RegDateCtx.Provider value={timeRemaining}>
+          <Heading>Инвестиции</Heading>
+          <PackagesInfo data={packagesData} isShowPromoInfo={isShowPromoInfo} />
+          <HeadingBottom>Купить инвестпакет</HeadingBottom>
+          <InvestmentPackageSelector data={packagesData} isShowPromoInfo={isShowPromoInfo} />
+        </RegDateCtx.Provider>
       </ContentWrapper>
       <Footer />
     </Wrapper>

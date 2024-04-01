@@ -13,7 +13,7 @@ interface AdornmentProps {
   state: boolean;
   handleClickIcon: () => void;
   icon1: ReactNode;
-  icon2: ReactNode;
+  icon2?: ReactNode;
 }
 
 export const EndAdornment: FC<AdornmentProps> = ({ state, handleClickIcon, icon1, icon2 }) => {

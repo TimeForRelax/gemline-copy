@@ -1,9 +1,5 @@
-export const colorFetch =
-  (color: string) =>
-  ({ theme }: { theme: any }) =>
-    theme.colors[color];
+import { theme } from '@styles/index';
 
-export const borderRadiusFetch =
-  (radius: string) =>
-  ({ theme }: { theme: any }) =>
-    theme.borderRadius[radius];
+export const colorFetch = (color: string) => theme.colors[color];
+
+export const borderRadiusFetch = (radius: string) => theme.borderRadius[radius];

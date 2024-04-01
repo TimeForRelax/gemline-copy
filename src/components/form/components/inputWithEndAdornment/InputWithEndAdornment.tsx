@@ -1,7 +1,7 @@
-import { FC, ReactNode } from 'react';
+import { FC, InputHTMLAttributes, ReactNode } from 'react';
 import { UniversalInput } from '../../common/universalInput/UniversalInput';
 
-interface InputWithEndAdornmentProps {
+interface InputWithEndAdornmentProps extends InputHTMLAttributes<HTMLInputElement> {
   rules: any;
   type: string;
   endAdornment: ReactNode;

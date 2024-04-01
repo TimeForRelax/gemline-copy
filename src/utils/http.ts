@@ -1,6 +1,6 @@
-import { SsValueType } from '@enums/index';
+import { LsValueType } from '@enums/index';
 import axios from 'axios';
-import { ss } from '@utils/index';
+import { cs, ls } from '@utils/index';
 
 export enum ApiCallType {
   GET = 'GET',
@@ -12,19 +12,22 @@ export enum ApiCallType {
 
 export class HttpService {
   static source = axios.CancelToken.source();
-  static token = ss.get(SsValueType.token);
+  static token = ls.get(LsValueType.token);
 
   static getToken() {
-    return ss.get(SsValueType.token);
+    return ls.get(LsValueType.token);
   }
 
   static setToken(token: string) {
-    ss.set(SsValueType.token, token);
+    ls.set(LsValueType.token, token);
     HttpService.token = token;
   }
 
   static removeToken() {
-    ss.remove(SsValueType.token);
+    ls.remove(LsValueType.token);
+
+    cs.remove(LsValueType.token);
+
     HttpService.token = null;
   }
 
@@ -40,7 +43,7 @@ export class HttpService {
     return HttpService.makeRequest({
       url,
       method: 'post',
-      data,
+      data: { ...data, Token: this.getToken() },
       ...options,
     });
   }
@@ -49,7 +52,7 @@ export class HttpService {
     return HttpService.makeRequest({
       url,
       method: 'put',
-      data,
+      data: { ...data, Token: this.getToken() },
       ...options,
     });
   }
@@ -58,7 +61,7 @@ export class HttpService {
     return HttpService.makeRequest({
       url,
       method: 'patch',
-      data,
+      data: { ...data, Token: this.getToken() },
       ...options,
     });
   }
@@ -67,28 +70,17 @@ export class HttpService {
     return HttpService.makeRequest({
       url,
       method: 'delete',
-      data,
+      data: { ...data, Token: this.getToken() },
       ...options,
     });
   }
 
   static makeRequest(config: any) {
-    let location: any;
-
-    if (config.location) {
-      location = config.location;
-      delete config.location;
-    }
-
     const cancelToken = this.source.token;
-    const token = HttpService.getToken();
 
-    if (token) {
-      config.headers = Object.assign(config.headers || {}, {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      });
-    }
+    config.headers = Object.assign(config.headers || {}, {
+      'Content-Type': 'application/json',
+    });
 
     return axios
       .request({ ...config, cancelToken })

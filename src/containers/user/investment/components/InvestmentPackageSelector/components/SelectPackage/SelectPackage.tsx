@@ -1,12 +1,14 @@
+import { useInvestToPackage } from '@api/index';
+import { Buttons, ResponsiveModal } from '@components/index';
 import styled from '@emotion/styled';
-import { Box, Button } from '@mui/material';
-import { colorFetch, media, theme, useMediaType } from '@styles/index';
+import { ButtonsTypes, LsValueType, ModalsTypes } from '@enums/index';
+import { Modals } from '@features/index';
+import { Box } from '@mui/material';
+import { colorFetch, media } from '@styles/index';
+import { useQueryClient } from '@tanstack/react-query';
+import { ls } from '@utils/index';
 import { FC, useState } from 'react';
-import { data } from './data/data';
-import { InvestDrawer } from './components/investDrawer/InvestDrawer';
-import { InvestModal } from './components/investModal/InvestModal';
-import { InvestSuccessDrawer } from './components/investSuccessDrawer/InvestSuccessDrawer';
-import { InvestSuccessModal } from './components/investSuccessModal/InvestSuccessModal';
+import { decimal } from 'src/consts';
 import { SelectPckgItemContent } from './components/selectPckgItemContent/SelectPckgItemContent';
 
 const SelectPckgBox = styled(Box)`
@@ -17,17 +19,14 @@ const SelectPckgBox = styled(Box)`
   gap: 12px;
 `;
 
-const SelectPckgBoxItem = styled(Box) <{ promo: boolean; disabled: boolean }>`
+const SelectPckgBoxItem = styled(Box)<{ promo: boolean }>`
   width: 100%;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;
   padding: 12px 14px 12px 30px;
-  border-radius: 12px;
-  background: ${({ promo }) => (promo ? `${colorFetch('green')({ theme })}` : `${colorFetch('gray')({ theme })}`)};
-  box-shadow: 0px 2px 4px 0px ${colorFetch('shadow_gray')({ theme })} inset;
-  opacity: ${({ disabled }) => (disabled ? 0.4 : 1)};
-  pointer-events: ${({ disabled }) => (disabled ? 'none' : 'initial')};
+  border-radius: 24px;
+  background-color: ${({ promo }) => (promo ? `${colorFetch('green')}` : `${colorFetch('white')}`)};
 
   ${media.tabletPro} {
     gap: 15px;
@@ -37,98 +36,128 @@ const SelectPckgBoxItem = styled(Box) <{ promo: boolean; disabled: boolean }>`
   }
 `;
 
-const InvestButton = styled(Button) <{ promo: boolean }>`
+const StyledButtons = styled(Buttons)`
   width: max-content;
-  height: max-content;
-  margin: auto 0;
-  padding: 16px 32px;
-  border-radius: 8px;
-  background-color: ${({ promo }) =>
-    promo ? `${colorFetch('white')({ theme })}` : `${colorFetch('green')({ theme })}`};
-  color: ${({ promo }) => (promo ? `${colorFetch('green')({ theme })}` : `${colorFetch('white')({ theme })}`)};
-  font-family: Nunito600;
-  font-size: 14px;
-  font-weight: 600;
-  line-height: normal;
-  text-transform: initial;
-  box-shadow: none;
-  border: 1px solid transparent;
-
-  &:hover {
-    background-color: ${({ promo }) =>
-    promo ? `${colorFetch('light_green_hover')({ theme })}` : `${colorFetch('light_green_hover')({ theme })}`};
-    color: ${colorFetch('white')({ theme })};
-    border: ${({ promo }) => (promo ? `1px solid ${colorFetch('white')({ theme })}` : `1px solid transparent`)};
-    box-shadow: none;
-  }
 
   ${media.tabletPro} {
     width: 100%;
     grid-column: span 3;
   }
 `;
+
 interface SelectPackageProps {
   disabled: boolean;
+  calcPromoPackageProfit: any;
+  calcPckgsProfit: any;
+  isShowPromo: boolean;
+  amount: any;
 }
 
-export const SelectPackage: FC<SelectPackageProps> = ({ disabled }) => {
-  const { phone } = useMediaType();
+export const SelectPackage: FC<SelectPackageProps> = ({
+  disabled,
+  calcPromoPackageProfit,
+  calcPckgsProfit,
+  isShowPromo,
+  amount,
+}) => {
+  const queryClient = useQueryClient();
   const [currentPckg, setCurrentPckg] = useState<any>(null);
-  const [isOpenInvestInterface, setIsOpenInvestInterface] = useState<boolean>(false);
-  const [isOpenSuccesInterface, setIsOpenSuccesInterface] = useState<boolean>(false);
+  const [isOpenInvest, setIsOpenInvest] = useState<boolean>(false);
+  const [isOpenInvestSuccess, setIsOpenInvestSuccess] = useState<boolean>(false);
+  const [isOpenInvestError, setIsOpenInvestError] = useState<boolean>(false);
 
   const openInvestInterface = (pckg: any) => {
     setCurrentPckg(pckg);
-    setIsOpenInvestInterface(true);
+    setIsOpenInvest(true);
   };
 
   const closeInvestInterface = () => {
     setCurrentPckg(null);
-    setIsOpenInvestInterface(false);
+    setIsOpenInvest(false);
   };
 
   const closeInvestSuccessInterface = () => {
-    setIsOpenSuccesInterface(false);
+    setIsOpenInvestSuccess(false);
   };
 
-  const onInvestBtnClick = () => {
+  const closeInvestErrorInterface = () => {
+    setIsOpenInvestError(false);
+  };
+
+  const investSuccess = () => {
     closeInvestInterface();
-    setIsOpenSuccesInterface(true);
+    setIsOpenInvestSuccess(true);
+    queryClient.invalidateQueries({ queryKey: ['balance'] });
+  };
+
+  const investError = () => {
+    closeInvestInterface();
+    setIsOpenInvestError(true);
+  };
+
+  const invest = useInvestToPackage({
+    onSuccess: investSuccess,
+    onError: investError,
+  });
+
+  const onInvestBtnClick = (pckgId: number, amount: any) => {
+    const token = ls.get(LsValueType.token);
+    invest({
+      ContractId: pckgId,
+      Amount: (BigInt(amount) * decimal).toString(),
+      Token: token,
+    });
   };
 
   return (
     <SelectPckgBox>
-      {data.map((pckg: any) => (
-        <SelectPckgBoxItem key={pckg.id} promo={pckg.promo} disabled={disabled}>
-          {pckg.contentData.map((item: any, i: number) => (
-            <SelectPckgItemContent
-              key={i}
-              heading={item.heading}
-              amount={item.amount}
-              className={item.amount.slice(0, 1) === '$' && !pckg.promo ? 'green' : ''}
-            />
-          ))}
-          <InvestButton promo={pckg.promo} onClick={() => openInvestInterface(pckg)}>
+      {isShowPromo && (
+        <SelectPckgBoxItem promo={true}>
+          <SelectPckgItemContent heading={'«Промо» срок'} amount={calcPromoPackageProfit.period} className={'promo'} />
+          <SelectPckgItemContent heading={'Ежедневно'} amount={calcPromoPackageProfit.day_profit} className={'promo'} />
+          <SelectPckgItemContent
+            heading={'Общая прибыль'}
+            amount={calcPromoPackageProfit.sumProfit}
+            className={'promo'}
+          />
+          <StyledButtons
+            buttonType={ButtonsTypes.CONTAINED_WHITE}
+            onClick={() => openInvestInterface(calcPromoPackageProfit)}
+            disabled={disabled}
+          >
             Инвестировать
-          </InvestButton>
+          </StyledButtons>
         </SelectPckgBoxItem>
-      ))}
-      <InvestModal
-        open={!phone && isOpenInvestInterface}
-        onClose={closeInvestInterface}
-        currentPckg={currentPckg}
-        investAmount={'3200'}
-        onInvestClick={onInvestBtnClick}
-      />
-      <InvestDrawer
-        open={phone && isOpenInvestInterface}
-        onClose={closeInvestInterface}
-        currentPckg={currentPckg}
-        investAmount={'3200'}
-        onInvestClick={onInvestBtnClick}
-      />
-      <InvestSuccessModal open={!phone && isOpenSuccesInterface} onClose={closeInvestSuccessInterface} />
-      <InvestSuccessDrawer open={phone && isOpenSuccesInterface} onClose={closeInvestSuccessInterface} />
+      )}
+      {calcPckgsProfit &&
+        calcPckgsProfit.map((el: any) => (
+          <SelectPckgBoxItem key={el.id} promo={false}>
+            <SelectPckgItemContent heading={'Срок'} amount={el.profit.period} className={''} />
+            <SelectPckgItemContent heading={'Ежедневно'} amount={el.profit.day_profit} className={''} />
+            <SelectPckgItemContent heading={'Общая прибыль'} amount={el.profit.sumProfit} className={'green'} />
+
+            <StyledButtons
+              buttonType={ButtonsTypes.CONTAINED_GREEN}
+              onClick={() => openInvestInterface(el)}
+              disabled={disabled}
+            >
+              Инвестировать
+            </StyledButtons>
+          </SelectPckgBoxItem>
+        ))}
+      <ResponsiveModal isOpen={isOpenInvest} onClose={closeInvestInterface}>
+        <Modals
+          type={ModalsTypes.INVEST}
+          onClose={closeInvestInterface}
+          otherProps={{ currentPckg, amount, onInvestBtnClick: onInvestBtnClick }}
+        />
+      </ResponsiveModal>
+      <ResponsiveModal isOpen={isOpenInvestSuccess} onClose={closeInvestSuccessInterface}>
+        <Modals type={ModalsTypes.INVEST_SUCCESS} onClose={closeInvestSuccessInterface} />
+      </ResponsiveModal>
+      <ResponsiveModal isOpen={isOpenInvestError} onClose={closeInvestErrorInterface}>
+        <Modals type={ModalsTypes.INVEST_ERROR} onClose={closeInvestErrorInterface} />
+      </ResponsiveModal>
     </SelectPckgBox>
   );
 };

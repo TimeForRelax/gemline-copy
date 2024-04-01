@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
-import { Box } from '@mui/material';
-import { media, useMediaType } from '@styles/index';
+import { Box, Typography } from '@mui/material';
+import { media, useMediaType, colorFetch } from '@styles/index';
 import { FC } from 'react';
 import {
   ActivePackage,
@@ -10,7 +10,6 @@ import {
   PromoPackageStatus,
   TableHeading,
 } from './components/index';
-import { data } from './data/data';
 
 const PackagesInfoBox = styled(Box)`
   width: 100%;
@@ -25,45 +24,60 @@ const PackagesInfoBox = styled(Box)`
   }
 `;
 
-console.log(media.tabletPro);
+export const ActivePckgBoxText = styled(Typography)`
+  align-self: center;
+  color: ${colorFetch('black')};
+  font-family: Gilroy700;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 22px;
 
-interface PackagesInfoProps {}
+  &.package {
+    color: ${colorFetch('white')};
+  }
 
-export const PackagesInfo: FC<PackagesInfoProps> = () => {
+  &.period {
+    color: ${colorFetch('gray1')};
+  }
+`;
+
+interface PackagesInfoProps {
+  data: any;
+  isShowPromoInfo: boolean;
+}
+
+export const PackagesInfo: FC<PackagesInfoProps> = ({ data, isShowPromoInfo }) => {
   const { tabletPro, phone } = useMediaType();
+
   return (
     <PackagesInfoBox>
       {!tabletPro ? (
         <>
           <TableHeading />
-          <ActivePackage />
+          {isShowPromoInfo && <ActivePackage convertedPromoPackage={data?.convertedPromoPackage} />}
         </>
       ) : (
-        <ActivePackageMobile />
+        <>{isShowPromoInfo && <ActivePackageMobile convertedPromoPackage={data?.convertedPromoPackage} />}</>
       )}
-      <PromoPackageStatus />
-      {data.map(({ id, period, closedValues, openedValues }: any) => {
-        if (!phone) {
-          return (
-            <InvestmentInfoAccordion
-              id={id}
-              period={period}
-              closedValues={closedValues}
-              openedValues={openedValues}
-              key={id}
-            />
-          );
-        } else {
-          return (
-            <InvestmentInfoAccordionMobile
-              id={id}
-              period={period}
-              closedValues={closedValues}
-              openedValues={openedValues}
-              key={id}
-            />
-          );
-        }
+      {isShowPromoInfo && <PromoPackageStatus />}
+      {data?.convertedData.map(({ id, period, closedValues, openedValues }: any) => {
+        return !phone ? (
+          <InvestmentInfoAccordion
+            id={id}
+            period={period}
+            closedValues={closedValues}
+            openedValues={openedValues}
+            key={id}
+          />
+        ) : (
+          <InvestmentInfoAccordionMobile
+            id={id}
+            period={period}
+            closedValues={closedValues}
+            openedValues={openedValues}
+            key={id}
+          />
+        );
       })}
     </PackagesInfoBox>
   );

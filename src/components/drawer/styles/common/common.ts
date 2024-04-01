@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
-import { Button, Drawer, Typography } from '@mui/material';
-import { colorFetch, theme } from '@styles/index';
+import { Drawer, Typography } from '@mui/material';
+import { colorFetch } from '@styles/index';
 
 export const StyledDrawerBox = styled(Drawer)`
   border-radius: 20px 20px 0px 0px;
@@ -11,8 +11,8 @@ export const StyledDrawerBox = styled(Drawer)`
     gap: 20px;
     padding: 35px 20px;
     border-radius: 20px 20px 0px 0px;
-    background: ${colorFetch('gray')({ theme })};
-    max-height: 95vh;
+    background: ${colorFetch('white')};
+    max-height: 85vh;
 
     &::before {
       content: '';
@@ -25,42 +25,29 @@ export const StyledDrawerBox = styled(Drawer)`
       left: 50%;
       transform: translateX(-50%);
       border-radius: 100px;
-      background-color: ${colorFetch('shuttle_gray')({ theme })};
+      background-color: ${colorFetch('gray4')};
+    }
+  }
+
+  &.without-padding {
+    .MuiDrawer-paper {
+      padding: 35px 0;
     }
   }
 `;
 
 export const DrawerHeading = styled(Typography)`
-  color: ${colorFetch('white')({ theme })};
-  font-family: Nunito700;
+  color: ${colorFetch('black')};
+  font-family: Gilroy700;
   font-size: 18px;
   font-weight: 700;
   line-height: normal;
 `;
 
 export const DrawerContentText = styled(Typography)`
-  color: ${colorFetch('white')({ theme })};
-  font-family: Nunito400;
+  color: ${colorFetch('gray1')};
+  font-family: Gilroy500;
   font-size: 14px;
   font-weight: 400;
   line-height: normal;
-`;
-
-export const DrawerButton = styled(Button)`
-  width: 100%;
-  padding: 16px 32px;
-  border-radius: 8px;
-  background: ${colorFetch('green')({ theme })};
-  color: ${colorFetch('white')({ theme })};
-  font-family: Nunito600;
-  font-size: 14px;
-  font-weight: 600;
-  line-height: normal;
-  text-transform: initial;
-  box-shadow: none;
-
-  &:hover {
-    background-color: ${colorFetch('light_green_hover')({ theme })};
-    box-shadow: none;
-  }
 `;

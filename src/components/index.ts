@@ -1,3 +1,4 @@
+import { Buttons } from '@components/buttons/Buttons';
 import { Footer } from '@components/footer/Footer';
 import {
   AuthFormsBox,
@@ -16,8 +17,16 @@ import {
 import { LinkTo } from '@components/linkTo/LinkTo';
 import { Logo } from '@components/logo/Logo';
 import { SuccessScreen } from '@components/successScreen/SuccessScreen';
+import { ResponsiveModal } from '@components/responsiveModal/ResponsiveModal';
+import { CardColorBorder } from '@components/cardColorBorder/CardColorBorder';
+import { DrawerContentText, DrawerHeading, StyledDrawer } from '@components/drawer';
 
 export {
+  StyledDrawer,
+  DrawerContentText,
+  DrawerHeading,
+  Buttons,
+  ResponsiveModal,
   AuthFormsBox,
   EndAdornment,
   Footer,
@@ -34,4 +43,5 @@ export {
   StartAdornment,
   SuccessScreen,
   FormsSubHeading,
+  CardColorBorder,
 };

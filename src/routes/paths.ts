@@ -6,15 +6,19 @@ import queryString from 'query-string';
 export const MAPPING = Object.freeze({
   [View.REDIRECT]: { path: '/' },
 
-  [View.USER]: { path: '/user' },
-  [View.USER_CONTRACTS]: { path: '/user/contracts' },
-  [View.USER_INVESTMENT]: { path: '/user/investment' },
-  [View.USER_PARTNERS]: { path: '/user/partners' },
-  [View.USER_HISTORY]: { path: '/user/history' },
-  [View.USER_PROFILE]: { path: '/user/profile' },
+  [View.USER]: { path: '/my' },
+  [View.USER_CONTRACTS]: { path: '/my/contracts' },
+  [View.USER_INVESTMENT]: { path: '/my/investment' },
+  [View.USER_PARTNERS]: { path: '/my/partners' },
+  [View.USER_HISTORY]: { path: '/my/history' },
+  [View.USER_PROFILE]: { path: '/my/profile' },
 
   [View.ERROR]: { path: '/error' },
   [View.ERROR_404]: { path: '/error/404' },
+  [View.ERROR_401]: { path: '/error/401' },
+  [View.ERROR_500]: { path: '/error/500' },
+
+  [View.INVITE]: { path: '/invite' },
 }) as CombinedRoutes;
 
 export const getPath = (view: (typeof View)[keyof typeof View]) => (MAPPING[view] ? MAPPING[view].path : '');

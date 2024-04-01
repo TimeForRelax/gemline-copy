@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { media } from '@styles/index';
+import { colorFetch, media } from '@styles/index';
 
 export const Wrapper = styled.div`
   margin: 0 auto;
@@ -16,7 +16,7 @@ export const Wrapper = styled.div`
   }
 `;
 
-export const SideBarWrapper = styled.div<{ widthWindow: number }>`
+export const SideBarWrapper = styled.div<{ widthWindow: number; isOverflowHidden?: boolean; scrollBarWidth?: any }>`
   width: 280px;
   padding-right: 20px;
   height: 100%;
@@ -24,7 +24,10 @@ export const SideBarWrapper = styled.div<{ widthWindow: number }>`
   z-index: 100;
   top: 0;
   left: 50%;
-  transform: ${({ widthWindow }) => `translateX(calc(-${widthWindow / 2}px + 40px))`};
+  transform: ${({ widthWindow, isOverflowHidden }) =>
+    isOverflowHidden
+      ? `translateX(calc(-${widthWindow / 2}px + 40px - 8px))`
+      : `translateX(calc(-${widthWindow / 2}px + 40px))`};
   overflow-y: auto;
 
   ${media.tablet} {
@@ -37,8 +40,8 @@ export const SideBarWrapper = styled.div<{ widthWindow: number }>`
     right: 0;
     padding: 0 30px;
 
-    border-top: 1px solid #474a53;
-    background: #383c48;
+    border-top: 1px solid ${colorFetch('border')};
+    background-color: ${colorFetch('white')};
   }
 
   ${media.phone} {
@@ -46,10 +49,18 @@ export const SideBarWrapper = styled.div<{ widthWindow: number }>`
   }
 `;
 
-export const Body = styled.div<{ paddingTop: number; paddingBottom: number }>`
-  margin-left: 260px;
-  padding-left: 40px;
+export const Body = styled.div<{
+  paddingTop: number;
+  paddingBottom: number;
+  withoutSidebar?: boolean;
+  isOverflowHidden?: boolean;
+}>`
+  margin-left: ${({ withoutSidebar }) => (withoutSidebar ? 0 : '260px')};
+  padding-left: ${({ withoutSidebar, isOverflowHidden }) => (withoutSidebar ? 0 : isOverflowHidden ? '32px' : '40px')};
+  padding-right: ${({ isOverflowHidden }) => (isOverflowHidden ? '8px' : '0')};
   min-height: 100vh;
+  display: flex;
+  justify-content: center;
 
   ${media.tablet} {
     margin-left: 0;

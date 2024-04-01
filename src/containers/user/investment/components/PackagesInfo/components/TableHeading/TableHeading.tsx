@@ -6,14 +6,14 @@ import { data } from './data/data';
 
 const TableHeadingBox = styled(Box)`
   display: grid;
-  grid-template-columns: repeat(5, 1fr) 26px;
+  grid-template-columns: repeat(5, 1fr) 40px;
   gap: 20px;
   padding: 0 30px;
 `;
 
 const TableHeadingText = styled(Typography)`
-  color: ${colorFetch('silver_chalice')({ theme })};
-  font-family: Nunito600;
+  color: ${colorFetch('gray1')};
+  font-family: Gilroy600;
   font-size: 16px;
   font-weight: 600;
   line-height: 22px;

@@ -6,11 +6,12 @@ interface StyledDrawerProps {
   open: boolean;
   onClose: () => void;
   children: ReactNode;
+  className?: string;
 }
 
-export const StyledDrawer: FC<StyledDrawerProps> = ({ anchor, open, onClose, children }) => {
+export const StyledDrawer: FC<StyledDrawerProps> = ({ anchor, open, onClose, children, className, ...props }) => {
   return (
-    <StyledDrawerBox anchor={anchor} open={open} onClose={onClose}>
+    <StyledDrawerBox anchor={anchor} open={open} onClose={onClose} className={className ? className : ''} {...props}>
       {children}
     </StyledDrawerBox>
   );

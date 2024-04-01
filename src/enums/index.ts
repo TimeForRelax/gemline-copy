@@ -1,5 +1,7 @@
 import { SizesType } from '@enums/SizesType';
-import { SsValueType } from '@enums/SsValueType';
+import { LsValueType } from '@enums/LsValueType';
 import { ErrorView, GeneralView, UserView } from '@enums/View';
+import { ButtonsTypes } from '@enums/ButtonsTypes';
+import { ModalsTypes } from '@enums/ModalsTypes';
 
-export { SizesType, SsValueType, GeneralView, UserView, ErrorView };
+export { SizesType, LsValueType, ButtonsTypes, ModalsTypes, GeneralView, UserView, ErrorView };

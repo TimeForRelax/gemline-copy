@@ -12,8 +12,8 @@ interface LinkToProps {
 
 export const StyledLink = styled(Link)`
   display: inline-block;
-  color: ${colorFetch('green')({ theme })};
-  font-family: Nunito400;
+  color: ${colorFetch('green')};
+  font-family: Gilroy500;
   font-size: 16px;
   font-weight: 400;
   line-height: normal;

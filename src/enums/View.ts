@@ -2,6 +2,7 @@ export enum GeneralView {
   REDIRECT = 'REDIRECT',
   USER = 'USER',
   ERROR = 'ERROR',
+  INVITE = 'INVITE',
 }
 
 export enum UserView {
@@ -14,4 +15,6 @@ export enum UserView {
 
 export enum ErrorView {
   ERROR_404 = 'ERROR_404',
+  ERROR_401 = 'ERROR_401',
+  ERROR_500 = 'ERROR_500',
 }

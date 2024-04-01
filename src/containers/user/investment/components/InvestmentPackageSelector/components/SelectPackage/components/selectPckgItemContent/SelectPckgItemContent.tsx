@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { Box, Typography } from '@mui/material';
-import { colorFetch, media, theme } from '@styles/index';
+import { colorFetch, media } from '@styles/index';
 import { FC } from 'react';
 
 const SelectPckgBoxItemContent = styled(Box)`
@@ -11,11 +11,19 @@ const SelectPckgBoxItemContent = styled(Box)`
 `;
 
 const SelectPckgBoxItemContentHeading = styled(Typography)`
-  color: ${colorFetch('white')({ theme })};
-  font-family: Nunito400;
+  color: ${colorFetch('gray1')};
+  font-family: Gilroy500;
   font-size: 16px;
   font-weight: 400;
   line-height: normal;
+
+  &.promo {
+    color: ${colorFetch('white')};
+  }
+
+  &.greenModal {
+    color: ${colorFetch('gray')};
+  }
 
   ${media.phone} {
     font-size: 13px;
@@ -23,15 +31,36 @@ const SelectPckgBoxItemContentHeading = styled(Typography)`
 `;
 
 const SelectPckgBoxItemContentText = styled(Typography)`
-  color: ${colorFetch('white')({ theme })};
-  font-family: Nunito700;
-  font-size: 20px;
+  color: ${colorFetch('black')};
+  font-family: Gilroy700;
+  font-size: 18px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
 
+  &.promo {
+    color: ${colorFetch('white')};
+  }
+
   &.green {
-    color: ${colorFetch('green')({ theme })};
+    color: ${colorFetch('green')};
+  }
+
+  &.greenModal {
+    font-size: 30px;
+    color: ${colorFetch('green')};
+
+    ${media.phone} {
+      font-size: 24px;
+    }
+  }
+
+  &.blackModal {
+    font-size: 24px;
+
+    ${media.phone} {
+      font-size: 18px;
+    }
   }
 
   ${media.phone} {
@@ -48,7 +77,9 @@ interface SelectPckgItemContentProps {
 export const SelectPckgItemContent: FC<SelectPckgItemContentProps> = ({ heading, amount, className }) => {
   return (
     <SelectPckgBoxItemContent>
-      <SelectPckgBoxItemContentHeading>{heading}</SelectPckgBoxItemContentHeading>
+      <SelectPckgBoxItemContentHeading className={className ? className : ''}>
+        {heading}
+      </SelectPckgBoxItemContentHeading>
       <SelectPckgBoxItemContentText className={className ? className : ''}>{amount}</SelectPckgBoxItemContentText>
     </SelectPckgBoxItemContent>
   );

@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { Box, Button, Link, Typography } from '@mui/material';
-import { colorFetch, theme } from '@styles/index';
+import { colorFetch } from '@styles/index';
 
 export const AuthFormsBox = styled(Box)`
   padding: 40px 0;
@@ -11,9 +11,9 @@ export const AuthFormsBox = styled(Box)`
 `;
 
 export const FormsHeading = styled(Typography)`
-  color: ${colorFetch('white')({ theme })};
+  color: ${colorFetch('white')};
   text-align: center;
-  font-family: Nunito800;
+  font-family: Gilroy700;
   font-size: 42px;
   font-weight: 800;
   line-height: normal;
@@ -21,9 +21,9 @@ export const FormsHeading = styled(Typography)`
 `;
 
 export const FormsSubHeading = styled(Typography)`
-  color: ${colorFetch('light_gray')({ theme })};
+  color: ${colorFetch('gray1')};
   text-align: center;
-  font-family: Nunito600;
+  font-family: Gilroy600;
   font-size: 16px;
   font-weight: 600;
   line-height: 22px;
@@ -45,9 +45,9 @@ export const FormsSubmitButton = styled(Button)`
   width: 100%;
   padding: 16px 32px;
   border-radius: 8px;
-  background: ${colorFetch('green')({ theme })};
-  color: ${colorFetch('white')({ theme })};
-  font-family: Nunito600;
+  background: ${colorFetch('green')};
+  color: ${colorFetch('white')};
+  font-family: Gilroy600;
   font-size: 14px;
   font-weight: 600;
   line-height: normal;
@@ -55,14 +55,14 @@ export const FormsSubmitButton = styled(Button)`
   box-shadow: none;
 
   &:hover {
-    background-color: ${colorFetch('light_green_hover')({ theme })};
+    background-color: ${colorFetch('light_green_hover')};
     box-shadow: none;
   }
 `;
 
 export const FormLink = styled(Link)`
-  color: ${colorFetch('green')({ theme })};
-  font-family: Nunito400;
+  color: ${colorFetch('green')};
+  font-family: Gilroy500;
   font-size: 16px;
   font-weight: 400;
   line-height: normal;
@@ -77,8 +77,8 @@ export const FormsFooterBox = styled(Box)`
 `;
 
 export const FormsFooterText = styled(Typography)`
-  color: ${colorFetch('light_gray')({ theme })};
-  font-family: Nunito400;
+  color: ${colorFetch('gray1')};
+  font-family: Gilroy500;
   font-size: 16px;
   font-weight: 400;
   line-height: normal;

@@ -23,7 +23,7 @@ const Circle = styled.div<CircleProps>`
     margin: 0 auto;
     width: 15%;
     height: 15%;
-    background-color: ${({ backgroundColor, theme }) => backgroundColor || colorFetch('primary')({ theme })};
+    background-color: ${({ backgroundColor }) => backgroundColor || colorFetch('green')};
     border-radius: 100%;
     -webkit-animation: ${loading} 1.2s infinite ease-in-out both;
     animation: ${loading} 1.2s infinite ease-in-out both;
@@ -139,7 +139,7 @@ const Wrapper = styled.div`
 
 export const SpinnerClassic = ({
   className,
-  backgroundColor = 'red',
+  backgroundColor = 'green',
 }: {
   className?: string;
   backgroundColor?: string;

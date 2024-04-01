@@ -1,8 +1,11 @@
 import styled from '@emotion/styled';
 import { Box, Typography } from '@mui/material';
-import { colorFetch, media, theme } from '@styles/index';
+import { colorFetch, media } from '@styles/index';
+import dayjs from 'dayjs';
+import duration from 'dayjs/plugin/duration';
 import { FC } from 'react';
 import { Timer } from './Timer/Timer';
+dayjs.extend(duration);
 
 const PromoPackageStatusBox = styled(Box)`
   min-height: 85px;
@@ -10,8 +13,8 @@ const PromoPackageStatusBox = styled(Box)`
   justify-content: space-between;
   align-items: center;
   padding: 20px 30px;
-  border-radius: 12px;
-  border: 1px solid ${colorFetch('green')({ theme })};
+  border-radius: 24px;
+  border: 1px solid ${colorFetch('green')};
   gap: 12px;
 
   ${media.tabletPro} {
@@ -26,8 +29,8 @@ const PromoPackageStatusBox = styled(Box)`
 
 const PromoPackageStatusBoxText = styled(Typography)`
   width: 100%;
-  color: ${colorFetch('silver_chalice')({ theme })};
-  font-family: Nunito700;
+  color: ${colorFetch('green')};
+  font-family: Gilroy700;
   font-size: 18px;
   font-weight: 700;
   line-height: 25px;
@@ -42,18 +45,10 @@ const PromoPackageStatusBoxText = styled(Typography)`
 interface PromoPackageStatusProps {}
 
 export const PromoPackageStatus: FC<PromoPackageStatusProps> = () => {
-  const currentDate = new Date();
-
-  currentDate.setDate(currentDate.getDate() + 5);
-
-  const targetDate = currentDate.toISOString();
-
-  console.log(targetDate);
-
   return (
     <PromoPackageStatusBox>
       <PromoPackageStatusBoxText>До окончания действия пакета «Промо» осталось:</PromoPackageStatusBoxText>
-      <Timer targetDate={targetDate} />
+      <Timer />
     </PromoPackageStatusBox>
   );
 };

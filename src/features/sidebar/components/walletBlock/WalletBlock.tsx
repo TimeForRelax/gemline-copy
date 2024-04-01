@@ -1,9 +1,12 @@
+import { Buttons, ResponsiveModal } from '@components/index';
 import styled from '@emotion/styled';
-import { colorFetch, theme } from '@styles/index';
-import { FC } from 'react';
-import { Button } from '@mui/material';
+import { ButtonsTypes, ModalsTypes } from '@enums/index';
+import { Modals } from '@features/index';
+import { colorFetch } from '@styles/index';
+import { FC, useState } from 'react';
 
 import { ReactComponent as BalanceIcon } from '@assets/images/sidebar/balance/balance.svg';
+import { useGlobalState } from 'src/globalContext';
 
 const Wrapper = styled.div`
   padding: 20px 30px;
@@ -11,7 +14,7 @@ const Wrapper = styled.div`
   grid-template-columns: 36px 1fr;
   grid-gap: 16px 12px;
   border-radius: 12px;
-  background: ${colorFetch('gray')({ theme })};
+  background: ${colorFetch('white')};
   box-shadow: 0px 2px 4px 0px rgba(255, 255, 255, 0.15) inset;
 `;
 
@@ -21,15 +24,15 @@ const TextInfo = styled.div`
 `;
 
 const Label = styled.span`
-  font-family: 'Nunito400';
+  font-family: 'Gilroy500';
   font-size: 16px;
-  color: ${colorFetch('gray1')({ theme })};
+  color: ${colorFetch('gray1')};
 `;
 
 const Balance = styled.span`
-  font-family: 'Nunito700';
+  font-family: 'Gilroy700';
   font-size: 20px;
-  color: ${colorFetch('white')({ theme })};
+  color: ${colorFetch('black')};
 `;
 
 const ButtonsWrapper = styled.div`
@@ -38,54 +41,51 @@ const ButtonsWrapper = styled.div`
   gap: 10px;
 `;
 
-const StyledButton = styled(Button) <{ backgroundColor: string; backgroundColorHovered: string }>`
+const StyledButton = styled(Buttons)`
+  padding: 8px 12px;
   flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: 'Nunito600';
-  font-size: 14px;
-  letter-spacing: normal;
-  text-transform: none;
-  background-color: ${({ backgroundColor }) => colorFetch(backgroundColor)({ theme })};
-
-  &:hover {
-    background-color: ${({ backgroundColorHovered }) => backgroundColorHovered};
-  }
 `;
 
-interface WalletBlockProps { }
+interface WalletBlockProps {
+  openWithdraw: () => void;
+}
 
-export const WalletBlock: FC<WalletBlockProps> = ({ ...props }) => {
-  const handleWithdraw = () => { };
+export const WalletBlock: FC<WalletBlockProps> = ({ openWithdraw, ...props }) => {
+  const { balance } = useGlobalState();
 
-  const handleTopUp = () => { };
+  const [isOpenTopUp, setIsOpenTopUp] = useState<boolean>(false);
+
+  const handleTopUp = () => {
+    setIsOpenTopUp(true);
+  };
+
+  const onClose = () => {
+    setIsOpenTopUp(false);
+  };
 
   return (
-    <Wrapper {...props}>
-      <BalanceIcon />
-      <TextInfo>
-        <Label>Баланс</Label>
-        <Balance>2 888 USDT</Balance>
-      </TextInfo>
-      <ButtonsWrapper>
-        <StyledButton
-          onClick={handleWithdraw}
-          backgroundColor={'red'}
-          backgroundColorHovered={'#FA707C'}
-          variant="contained"
-        >
-          Вывести
-        </StyledButton>
-        <StyledButton
-          onClick={handleTopUp}
-          backgroundColor={'green'}
-          backgroundColorHovered={'#48D88A'}
-          variant="contained"
-        >
-          Пополнить
-        </StyledButton>
-      </ButtonsWrapper>
-    </Wrapper>
+    <>
+      <Wrapper {...props}>
+        <BalanceIcon />
+        <TextInfo>
+          <Label>Баланс</Label>
+          <Balance>{balance} $</Balance>
+        </TextInfo>
+        <ButtonsWrapper>
+          <StyledButton buttonType={ButtonsTypes.CONTAINED_GRAY} onClick={openWithdraw}>
+            Вывести
+          </StyledButton>
+          <StyledButton buttonType={ButtonsTypes.CONTAINED_GREEN} onClick={handleTopUp}>
+            Пополнить
+          </StyledButton>
+        </ButtonsWrapper>
+      </Wrapper>
+      <ResponsiveModal isOpen={isOpenTopUp} onClose={onClose}>
+        <Modals type={ModalsTypes.REPLENISH_ACCOUNT} onClose={onClose} />
+      </ResponsiveModal>
+    </>
   );
 };

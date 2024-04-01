@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { Box, InputLabel, TextField, Typography } from '@mui/material';
-import { colorFetch, theme } from '@styles/index';
+import { colorFetch, media } from '@styles/index';
 import React, { FC } from 'react';
 
 interface UniversalInputProps {
@@ -13,9 +13,11 @@ interface UniversalInputProps {
   type: string;
   error: boolean;
   helperText: string | undefined;
+  disabled?: boolean;
 }
 
 const InputBox = styled(Box)`
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -28,16 +30,24 @@ const NotRequiredLabelBox = styled(Box)`
 `;
 
 const Label = styled(InputLabel)`
-  color: ${colorFetch('white_seashell')({ theme })};
-  font-family: Nunito400;
-  font-weight: 400;
+  color: ${colorFetch('black')};
+  font-family: Gilroy500;
   font-size: 16px;
+  font-weight: 500;
   line-height: normal;
+
+  &.disabled {
+    opacity: 0.4;
+  }
+
+  ${media.phone} {
+    font-size: 14px;
+  }
 `;
 
 const LabelNotReqDesc = styled(Typography)`
-  color: ${colorFetch('dark_gray')({ theme })};
-  font-family: Nunito400;
+  color: ${colorFetch('gray')};
+  font-family: Gilroy500;
   font-size: 16px;
   font-weight: 400;
   line-height: normal;
@@ -45,37 +55,59 @@ const LabelNotReqDesc = styled(Typography)`
 
 const StyledTextField = styled(TextField)`
   .MuiOutlinedInput-root {
-    border-radius: 4px;
-    background: ${colorFetch('dark_trout_gray')({ theme })};
-    color: ${colorFetch('white')({ theme })};
+    border-radius: 16px;
+    background: ${colorFetch('white')};
+    color: ${colorFetch('black')};
+
     &:not(.Mui-error) {
       &:hover {
         fieldset {
-          border-color: ${colorFetch('light_pale_sky_gray')({ theme })};
+          border-color: ${colorFetch('border')};
         }
+      }
+    }
+
+    &.Mui-disabled {
+      pointer-events: none;
+      background-color: ${colorFetch('white')};
+      -webkit-text-fill-color: ${colorFetch('black')};
+
+      .MuiOutlinedInput-notchedOutline {
+        border: 1px solid ${colorFetch('border')};
       }
     }
   }
 
   .MuiOutlinedInput-input {
-    font-family: Nunito600;
+    font-family: Gilroy600;
     font-size: 16px;
-    font-weight: 600;
     line-height: normal;
+
+    &:hover,
+    &:focus {
+      &[type='number']::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+      }
+    }
+
+    &.Mui-disabled {
+      -webkit-text-fill-color: ${colorFetch('black')};
+      opacity: 0.4;
+    }
   }
 
   .Mui-focused {
     &:not(.Mui-error) {
       &:focus-within {
         fieldset {
-          border-color: ${colorFetch('light_pale_sky_gray')({ theme })};
+          border-color: ${colorFetch('border')};
         }
       }
     }
   }
 
   .MuiOutlinedInput-notchedOutline {
-    border: 1px solid ${colorFetch('mid_gray')({ theme })};
+    border: 1px solid ${colorFetch('border')};
   }
 `;
 
@@ -89,14 +121,18 @@ export const UniversalInput: FC<UniversalInputProps> = ({
   type,
   error,
   helperText,
+  disabled,
+  ...props
 }) => {
   const { required } = rules;
 
   return (
-    <InputBox>
+    <InputBox {...props}>
       {label && (
         <NotRequiredLabelBox>
-          <Label htmlFor={name}>{label}</Label>
+          <Label htmlFor={name} className={disabled ? 'disabled' : ''}>
+            {label}
+          </Label>
           {!!required && <LabelNotReqDesc>Необязательно</LabelNotReqDesc>}
         </NotRequiredLabelBox>
       )}
@@ -111,6 +147,8 @@ export const UniversalInput: FC<UniversalInputProps> = ({
         error={error}
         helperText={helperText}
         id={name}
+        disabled={disabled ? disabled : false}
+        {...props}
       />
     </InputBox>
   );

@@ -1,106 +1,72 @@
-import { ActivePckgBoxText } from '@containers/user/investment/Invesment';
 import styled from '@emotion/styled';
-import { Box, Popover, Typography } from '@mui/material';
-import { colorFetch, theme } from '@styles/index';
-import { FC, useState } from 'react';
-import { data } from './data/data';
+import { Box, Tooltip, tooltipClasses, TooltipProps } from '@mui/material';
+import { colorFetch } from '@styles/index';
+import { FC } from 'react';
+import { ActivePckgBoxText } from '../../PackagesInfo';
 
 import { ReactComponent as HelpCircleIcon } from '@assets/images/activePackage/help-circle.svg';
 
 const ActivePckgBox = styled(Box)`
   min-height: 85px;
   display: grid;
-  grid-template-columns: repeat(5, 1fr) 26px;
+  grid-template-columns: repeat(5, 1fr) 40px;
   gap: 20px;
   padding: 20px 30px;
-  border-radius: 12px;
-  background: ${colorFetch('green')({ theme })};
+  border-radius: 24px;
+  background: ${colorFetch('green')};
 `;
 
 const StyledHelpCircleIcon = styled(HelpCircleIcon)`
+  width: 32px;
+  height: 32px;
   align-self: center;
+  justify-self: 'center';
   cursor: pointer;
-`;
 
-const PopoverContent = styled(Box)`
-  display: flex;
-  width: 340px;
-  height: 96px;
-  padding: 10px 12px;
-  justify-content: center;
-  align-items: center;
-  flex-shrink: 0;
-  border-radius: 8px;
-  background: ${colorFetch('bright_gray')({ theme })};
-  box-shadow: 0px 8px 20px 0px ${colorFetch('popover_box_shadow')({ theme })};
-`;
-
-const PopoverContentText = styled(Typography)`
-  color: ${colorFetch('white')({ theme })};
-  font-family: Nunito600;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: normal;
-`;
-
-const StyledPopover = styled(Popover)`
-  .MuiPopover-paper {
-    background-color: ${colorFetch('bright_gray')({ theme })};
-    border-radius: 8px;
+  & g path {
+    fill: ${colorFetch('white')};
   }
 `;
 
-interface ActivePackageProps { }
+const HelpTooltip = styled(({ className, ...props }: TooltipProps) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))(() => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    maxWidth: 340,
+    backgroundColor: colorFetch('white'),
+    color: colorFetch('gray1'),
+    boxShadow: '0 2px 10px rgba(0, 0, 0, 0.15)',
+    borderRadius: '8px',
+    padding: '10px 12px',
+    fontFamily: 'Gilroy500',
+    fontSize: '14px',
+    lineHeight: 'normal',
+    letterSpacing: 'normal',
+  },
+}));
 
-export const ActivePackage: FC<ActivePackageProps> = () => {
-  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+interface ActivePackageProps {
+  convertedPromoPackage: any;
+}
 
-  const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handlePopoverClose = () => {
-    setAnchorEl(null);
-  };
-
-  const open = Boolean(anchorEl);
+export const ActivePackage: FC<ActivePackageProps> = ({ convertedPromoPackage }) => {
+  const { title, amount, day_profit, month_profit, year_profit } = convertedPromoPackage ?? {};
 
   return (
     <ActivePckgBox>
-      {data.map((text: string, i: number) => (
-        <ActivePckgBoxText key={i}>{text}</ActivePckgBoxText>
-      ))}
-      <StyledHelpCircleIcon
-        aria-owns={open ? 'mouse-over-popover' : undefined}
-        aria-haspopup="true"
-        onMouseEnter={handlePopoverOpen}
-        onMouseLeave={handlePopoverClose}
-      />
-      <StyledPopover
-        id="mouse-over-popover"
-        sx={{
-          pointerEvents: 'none',
-        }}
-        open={open}
-        anchorEl={anchorEl}
-        onClose={handlePopoverClose}
-        disableRestoreFocus
-        anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
-        }}
-        transformOrigin={{
-          vertical: 'bottom',
-          horizontal: 'right',
-        }}
+      <ActivePckgBoxText className="package">{title ? title : ''}</ActivePckgBoxText>
+      <ActivePckgBoxText className="package">{amount ? amount : ''}</ActivePckgBoxText>
+      <ActivePckgBoxText className="package">{day_profit ? day_profit : ''}</ActivePckgBoxText>
+      <ActivePckgBoxText className="package">{month_profit ? month_profit : ''}</ActivePckgBoxText>
+      <ActivePckgBoxText className="package">{year_profit ? year_profit : ''}</ActivePckgBoxText>
+      <HelpTooltip
+        placement="top"
+        title={
+          'Промо-пакет GEMLINE — предложение для новых инвесторов, которое поможет понять принципы работы нашей инвестиционной платформы и оценить потенциал доходности'
+        }
       >
-        <PopoverContent>
-          <PopoverContentText>
-            Промо-пакет GEMLINE — предложение для новых инвесторов, которое поможет понять принципы работы нашей
-            инвестиционной платформы и оценить потенциал доходности
-          </PopoverContentText>
-        </PopoverContent>
-      </StyledPopover>
+        <StyledHelpCircleIcon />
+      </HelpTooltip>
     </ActivePckgBox>
   );
 };

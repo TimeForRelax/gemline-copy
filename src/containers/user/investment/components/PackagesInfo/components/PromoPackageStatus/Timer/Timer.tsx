@@ -1,7 +1,13 @@
+import { RegDateCtx } from '@containers/user/investment/Invesment';
+import { formatDays, formatHours, formatMinutes } from '@containers/user/investment/utils/utils';
 import styled from '@emotion/styled';
 import { Box } from '@mui/material';
-import { colorFetch, media, theme } from '@styles/index';
-import { FC, useEffect, useState } from 'react';
+import { colorFetch, media } from '@styles/index';
+import dayjs from 'dayjs';
+import duration from 'dayjs/plugin/duration';
+import { FC, useContext } from 'react';
+
+dayjs.extend(duration);
 
 const TimerBox = styled(Box)`
   display: flex;
@@ -26,7 +32,7 @@ const TimerTimeBox = styled(Box)`
   justify-content: center;
   align-items: center;
   border-radius: 12px;
-  background: ${colorFetch('gray')({ theme })};
+  background: ${colorFetch('green')};
 
   ${media.tabletPro} {
     flex: 1;
@@ -38,8 +44,8 @@ const TimerTimeBox = styled(Box)`
 `;
 
 const TimerTimeText = styled(Box)`
-  color: ${colorFetch('white')({ theme })};
-  font-family: Nunito700;
+  color: ${colorFetch('white')};
+  font-family: Gilroy700;
   font-size: 18px;
   font-weight: 700;
   line-height: 25px;
@@ -51,48 +57,27 @@ const TimerTimeText = styled(Box)`
   }
 `;
 
-interface TimerProps {
-  targetDate: string;
-}
+interface TimerProps {}
 
-export const Timer: FC<TimerProps> = ({ targetDate }) => {
-  const getTimeRemaining = () => {
-    const now = new Date().getTime();
-    const targetTime = new Date(targetDate).getTime();
-    const timeDiff = targetTime - now;
-
-    if (timeDiff <= 0) {
-      return { days: 0, hours: 0, minutes: 0, seconds: 0 };
-    }
-
-    const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
-    const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
-    const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
-
-    return { days, hours, minutes, seconds };
-  };
-
-  const [timeRemaining, setTimeRemaining] = useState(getTimeRemaining());
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setTimeRemaining(getTimeRemaining());
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [targetDate]);
+export const Timer: FC<TimerProps> = () => {
+  const timeRemaining = useContext(RegDateCtx);
 
   return (
     <TimerBox>
       <TimerTimeBox>
-        <TimerTimeText>{timeRemaining.days} дней</TimerTimeText>
+        <TimerTimeText>
+          {timeRemaining.days} {formatDays(timeRemaining.days)}
+        </TimerTimeText>
       </TimerTimeBox>
       <TimerTimeBox>
-        <TimerTimeText>{timeRemaining.hours} часов</TimerTimeText>
+        <TimerTimeText>
+          {timeRemaining.hours} {formatHours(timeRemaining.hours)}
+        </TimerTimeText>
       </TimerTimeBox>
       <TimerTimeBox>
-        <TimerTimeText>{timeRemaining.minutes} минуты</TimerTimeText>
+        <TimerTimeText>
+          {timeRemaining.minutes} {formatMinutes(timeRemaining.minutes)}
+        </TimerTimeText>
       </TimerTimeBox>
     </TimerBox>
   );

@@ -1,4 +1,14 @@
-import { Contracts, Error404, History, Investment, Partners, Profile } from '@containers/index';
+import {
+  Contracts,
+  Error401,
+  Error404,
+  Error500,
+  History,
+  Investment,
+  Invite,
+  Partners,
+  Profile,
+} from '@containers/index';
 import { WithAuth } from '@features/index';
 import { ErrorsLayout, UserLayout } from '@layouts/index';
 import { PATHS } from '@routes/paths';
@@ -38,7 +48,15 @@ export const routes = [
   {
     path: PATHS.ERROR,
     render: ({ ...props }: any) => <ErrorsLayout {...props} />,
-    routes: [{ path: PATHS.ERROR_404, component: <Error404 /> }],
+    routes: [
+      { path: PATHS.ERROR_404, component: <Error404 /> },
+      { path: PATHS.ERROR_401, component: <Error401 /> },
+      { path: PATHS.ERROR_500, component: <Error500 /> },
+    ],
+  },
+  {
+    path: PATHS.INVITE,
+    component: <Invite />,
   },
   {
     path: PATHS.REDIRECT,
